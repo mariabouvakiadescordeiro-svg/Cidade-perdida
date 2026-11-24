@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Mistério da Cidade Perdida</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #06152e, #0b2850, #123f70);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 35px 20px;
+            background: rgba(3, 15, 35, 0.65);
+            border-bottom: 1px solid rgba(100, 180, 255, 0.25);
+        }
+
+        header h1 {
+            font-size: 32px;
+            color: #66c7ff;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            color: #c2d9f2;
+            font-size: 15px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .game-card {
+            background: rgba(9, 30, 60, 0.95);
+            border: 1px solid #28629b;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+        }
+
+        .tag {
+            display: inline-block;
+            background: #123f70;
+            color: #78d0ff;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #79ceff;
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        #story {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d5e6f8;
+            margin-bottom: 25px;
+            white-space: pre-line;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .choice-btn {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid #347fc0;
+            border-radius: 10px;
+            background: #103966;
+            color: white;
+            font-size: 15px;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .choice-btn:hover {
+            background: #1763a5;
+            border-color: #75ceff;
+            transform: translateY(-2px);
+        }
+
+        .choice-btn:focus-visible {
+            outline: 3px solid #79ceff;
+            outline-offset: 3px;
+        }
+
+        .progress-area {
+            margin-top: 30px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            color: #9fc8ed;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 9px;
+            background: #18385a;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #1689e8, #75d5ff);
+            transition: width 0.4s;
+        }
+
+        .restart-btn {
+            display: none;
+            margin-top: 25px;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 9px;
+            background: #65c5ff;
+            color: #06203c;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .restart-btn:hover {
+            background: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #8eafd1;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .game-card {
+                padding: 23px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>✦ O Mistério da Cidade Perdida</h1>
+        <p>Uma aventura onde cada escolha pode mudar seu destino.</p>
+    </header>
+
+    <main class="container">
+
+        <section class="game-card" id="game">
+
+            <span class="tag">AVENTURA INTERATIVA</span>
+
+            <h2 id="title">O início da jornada</h2>
+
+            <p id="story">
+                Você é um jovem explorador que recebeu um mapa misterioso.
+                Segundo a lenda, existe uma cidade perdida escondida além
+                das montanhas azuis.
+
+                Depois de semanas de viagem, você finalmente chega à
+                entrada de uma floresta desconhecida.
+
+                O mapa apresenta dois caminhos. Qual será sua escolha?
+            </p>
+
+            <div class="choices" id="choices">
+
+                <button class="choice-btn" data-choice="floresta">
+                    🌲 Explorar a floresta misteriosa
+                </button>
+
+                <button class="choice-btn" data-choice="montanha">
+                    ⛰️ Seguir pelo caminho das montanhas
+                </button>
+
+            </div>
+
+            <div class="progress-area">
+
+                <div class="progress-info">
+                    <span>Progresso da aventura</span>
+                    <span id="progress-text">0%</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progress"></div>
+                </div>
+
+            </div>
+
+            <button class="restart-btn" id="restart">
+                ↻ Jogar novamente
+            </button>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Desenvolvido com HTML, CSS e JavaScript | Projeto Alura</p>
+        <p>© 2026 - O Mistério da Cidade Perdida</p>
+    </footer>
+
+    <script>
+
+        // Elementos da página
+        const title = document.getElementById("title");
+        const story = document.getElementById("story");
+        const choices = document.getElementById("choices");
+        const progress = document.getElementById("progress");
+        const progressText = document.getElementById("progress-text");
+        const restart = document.getElementById("restart");
+
+        // Dados da aventura
+        const adventure = {
+
+            inicio: {
+                title: "O início da jornada",
+                text: "Você é um jovem explorador que recebeu um mapa misterioso. Segundo a lenda, existe uma cidade perdida escondida além das montanhas azuis. Depois de semanas de viagem, você finalmente chega à entrada de uma floresta desconhecida. Qual caminho deseja seguir?",
+                options: [
+                    { text: "🌲 Explorar a floresta misteriosa", next: "floresta" },
+                    { text: "⛰️ Seguir pelo caminho das montanhas", next: "montanha" }
+                ]
+            },
+
+            floresta: {
+                title: "A floresta encantada",
+                text: "Você entra na floresta e percebe que as árvores escondem uma antiga trilha. Depois de caminhar por alguns minutos, encontra uma pequena cabana abandonada e uma ponte de madeira sobre um rio.",
+                options: [
+                    { text: "🏚️ Investigar a cabana", next: "cabana" },
+                    { text: "🌉 Atravessar a ponte", next: "ponte" }
+                ]
+            },
+
+            montanha: {
+                title: "O desafio das montanhas",
+                text: "O caminho é difícil, mas você consegue subir a montanha. Lá do alto, encontra uma caverna iluminada por uma luz azul misteriosa. Perto dela existe uma passagem estreita entre as rochas.",
+                options: [
+                    { text: "🔦 Entrar na caverna", next: "caverna" },
+                    { text: "🪨 Seguir pela passagem", next: "passagem" }
+                ]
+            },
+
+            cabana: {
+                title: "O segredo da cabana",
+                text: "Dentro da cabana você encontra um diário antigo. Nele está escrito que a cidade perdida guarda um cristal capaz de iluminar o mundo. O diário também revela a localização de uma porta secreta.",
+                options: [
+                    { text: "📖 Seguir as instruções do diário", next: "cidade" },
+                    { text: "🚪 Abrir a porta misteriosa", next: "tesouro" }
+                ]
+            },
+
+            ponte: {
+                title: "O rio desconhecido",
+                text: "Ao atravessar a ponte, você encontra uma pequena embarcação presa na margem. Do outro lado do rio, consegue enxergar as ruínas de uma antiga construção.",
+                options: [
+                    { text: "🚣 Usar a embarcação", next: "cidade" },
+                    { text: "🏛️ Explorar as ruínas", next: "tesouro" }
+                ]
+            },
+
+            caverna: {
+                title: "A caverna azul",
+                text: "A caverna está cheia de cristais brilhantes. No centro existe uma inscrição antiga que mostra o caminho para a cidade perdida. Mas uma porta de pedra bloqueia a passagem.",
+                options: [
+                    { text: "🔮 Tocar no cristal azul", next: "tesouro" },
+                    { text: "🗝️ Procurar uma chave", next: "cidade" }
+                ]
+            },
+
+            passagem: {
+                title: "A passagem secreta",
+                text: "Você encontra uma passagem escondida entre as rochas. Ela leva até um vale silencioso onde existem estátuas antigas. Uma delas segura um objeto brilhante.",
+                options: [
+                    { text: "🗿 Investigar a estátua", next: "tesouro" },
+                    { text: "🧭 Seguir até o vale", next: "cidade" }
+                ]
+            },
+
+            cidade: {
+                title: "A cidade perdida",
+                text: "Depois de superar os desafios, você finalmente encontra a lendária cidade perdida! Construções magníficas aparecem diante dos seus olhos. No centro existe um templo com uma enorme porta dourada.",
+                options: [
+                    { text: "🏛️ Entrar no templo", next: "final" },
+                    { text: "💎 Procurar o cristal lendário", next: "tesouro" }
+                ]
+            },
+
+            tesouro: {
+                title: "O cristal lendário",
+                text: "Você encontra um cristal azul extraordinário. Quando o toca, uma luz intensa ilumina toda a região. Uma mensagem aparece: 'A verdadeira riqueza está na coragem de descobrir o desconhecido'. Você conseguiu desvendar um dos maiores segredos da história!",
+                options: []
+            },
+
+            final: {
+                title: "A descoberta extraordinária!",
+                text: "Dentro do templo você encontra registros de uma civilização perdida. Sua descoberta será lembrada por gerações. Você se tornou um dos maiores exploradores da história e revelou ao mundo o segredo da cidade perdida. Parabéns, aventureiro!",
+                options: []
+            }
+
+        };
+
+        // Contador de progresso
+        let steps = 0;
+
+        // Função para atualizar a aventura
+        function showScene(sceneName) {
+
+            const scene = adventure[sceneName];
+
+            title.textContent = scene.title;
+            story.textContent = scene.text;
+
+            choices.innerHTML = "";
+
+            steps++;
+
+            // Atualiza a barra de progresso
+            const percentage = Math.min(steps * 20, 100);
+
+            progress.style.width = percentage + "%";
+            progressText.textContent = percentage + "%";
+
+            // Cria os botões de escolha
+            scene.options.forEach(option => {
+
+                const button = document.createElement("button");
+
+                button.classList.add("choice-btn");
+                button.textContent = option.text;
+
+                button.dataset.next = option.next;
+
+                choices.appendChild(button);
+
+            });
+
+            // Adiciona interatividade aos botões
+            document.querySelectorAll(".choice-btn").forEach(button => {
+
+                button.addEventListener("click", function() {
+
+                    const nextScene = this.dataset.next;
+
+                    showScene(nextScene);
+
+                });
+
+            });
+
+            // Verifica se a aventura terminou
+            if (scene.options.length === 0) {
+
+                restart.style.display = "inline-block";
+
+            } else {
+
+                restart.style.display = "none";
+
+            }
+
+        }
+
+        // Reinicia a aventura
+        restart.addEventListener("click", function() {
+
+            steps = 0;
+
+            showScene("inicio");
+
+        });
+
+    </script>
+
+</body>
+</html>
